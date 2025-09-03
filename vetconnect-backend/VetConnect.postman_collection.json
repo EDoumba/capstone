@@ -1,0 +1,84 @@
+{
+  "info": {
+    "name": "VetConnect API",
+    "_postman_id": "vetconnect-001",
+    "description": "Collection pour tester les routes /api/vets",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get all vets",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:6000/api/vets",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "6000",
+          "path": ["api","vets"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" },
+            { "key": "specialty", "value": "" },
+            { "key": "city", "value": "" },
+            { "key": "state", "value": "" },
+            { "key": "minRating", "value": "" },
+            { "key": "search", "value": "" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get vet by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:6000/api/vets/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "6000",
+          "path": ["api","vets","1"]
+        }
+      }
+    },
+    {
+      "name": "Update vet profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"bio\": \"Veterinarian specialized in dogs and cats\",\n  \"specialty\": \"Dogs & Cats\",\n  \"address\": \"123 Main Street\",\n  \"city\": \"Calgary\",\n  \"state\": \"AB\",\n  \"zip_code\": \"T1X1X1\",\n  \"latitude\": 51.0447,\n  \"longitude\": -114.0719,\n  \"availabilities\": [\n    { \"day_of_week\": \"Monday\", \"start_time\": \"09:00\", \"end_time\": \"17:00\", \"is_available\": true },\n    { \"day_of_week\": \"Tuesday\", \"start_time\": \"09:00\", \"end_time\": \"17:00\", \"is_available\": true }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:6000/api/vets/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "6000",
+          "path": ["api","vets","1"]
+        }
+      }
+    },
+    {
+      "name": "Get vet dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:6000/api/vets/1/dashboard",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "6000",
+          "path": ["api","vets","1","dashboard"]
+        }
+      }
+    }
+  ]
+}

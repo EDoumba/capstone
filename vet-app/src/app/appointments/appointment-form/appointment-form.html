@@ -1,0 +1,105 @@
+<div class="appointment-form-container">
+  <div class="container">
+    <div class="page-header">
+      <h1>Book Appointment</h1>
+      <p>Schedule an appointment with your veterinarian</p>
+    </div>
+
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Select Veterinarian</mat-label>
+              <mat-select formControlName="vetId" required (selectionChange)="onVetSelect($event.value)">
+                <mat-option *ngFor="let vet of vets" [value]="vet.id">
+                  {{vet.name}} - {{vet.specialty}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="appointmentForm.get('vetId')?.hasError('required')">
+                Veterinarian is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Select Pet</mat-label>
+              <mat-select formControlName="petId" required>
+                <mat-option *ngFor="let pet of pets" [value]="pet.id">
+                  {{pet.name}} ({{pet.type}})
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="appointmentForm.get('petId')?.hasError('required')">
+                Pet is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Appointment Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="date" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="appointmentForm.get('date')?.hasError('required')">
+                Date is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" *ngIf="availableTimes.length > 0">
+              <mat-label>Select Time</mat-label>
+              <mat-select formControlName="time" required>
+                <mat-option *ngFor="let time of availableTimes" [value]="time">
+                  {{time}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="appointmentForm.get('time')?.hasError('required')">
+                Time is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Reason for Visit</mat-label>
+              <textarea matInput formControlName="reason" rows="3" required></textarea>
+              <mat-error *ngIf="appointmentForm.get('reason')?.hasError('required')">
+                Reason is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Additional Notes</mat-label>
+              <textarea matInput formControlName="notes" rows="2"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="form-actions">
+            <button mat-button type="button" routerLink="/appointments">
+              Cancel
+            </button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="loading || appointmentForm.invalid">
+              {{ loading ? 'Booking...' : 'Book Appointment' }}
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="selectedVet" class="vet-info-card">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img [src]="selectedVet.imageUrl || 'assets/default-vet.jpg'" [alt]="selectedVet.name">
+        </div>
+        <mat-card-title>{{selectedVet.name}}</mat-card-title>
+        <mat-card-subtitle>{{selectedVet.specialty}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{selectedVet.experience}}+ years of experience</p>
+        <p><mat-icon>location_on</mat-icon> {{selectedVet.address}}</p>
+        <div class="rating">
+          <span class="rating-stars">
+            <mat-icon *ngFor="let star of getStars(selectedVet.rating)">star</mat-icon>
+            <mat-icon *ngFor="let star of getEmptyStars(selectedVet.rating)">star_border</mat-icon>
+          </span>
+          <span>({{selectedVet.reviewCount}} reviews)</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

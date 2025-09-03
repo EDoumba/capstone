@@ -1,0 +1,248 @@
+.vet-detail-container {
+  padding: 24px 0 40px;
+  min-height: calc(100vh - 200px);
+}
+
+.vet-profile {
+  .profile-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+    align-items: start;
+    
+    .vet-image {
+      img {
+        width: 280px;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+    }
+    
+    .vet-info {
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        color: #2c3e50;
+      }
+      
+      .specialty {
+        font-size: 1.2rem;
+        color: #3f51b5;
+        margin: 0 0 20px 0;
+        font-weight: 500;
+      }
+      
+      .rating-section {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        
+        .rating {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          
+          .rating-stars {
+            color: #ffc107;
+            
+            mat-icon {
+              font-size: 24px;
+              height: 24px;
+              width: 24px;
+            }
+          }
+          
+          .rating-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+          }
+        }
+        
+        .review-count {
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+      
+      .action-buttons {
+        display: flex;
+        gap: 12px;
+        
+        button {
+          padding: 8px 16px;
+          
+          mat-icon {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.tab-content {
+  padding: 24px 0;
+  
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  
+  .detail-card {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+    h3 {
+      margin: 0 0 16px 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    
+    .contact-info {
+      p {
+        display: flex;
+        align-items: center;
+        margin: 12px 0;
+        
+        mat-icon {
+          margin-right: 12px;
+          color: #3f51b5;
+        }
+      }
+    }
+    
+    .availability {
+      .availability-day {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  
+  .reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    h2 {
+      margin: 0;
+      color: #2c3e50;
+    }
+  }
+  
+  .reviews-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .no-reviews {
+    text-align: center;
+    padding: 60px 20px;
+    
+    mat-icon {
+      font-size: 64px;
+      height: 64px;
+      width: 64px;
+      margin-bottom: 16px;
+      color: rgba(0, 0, 0, 0.3);
+    }
+    
+    h3 {
+      margin-bottom: 8px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    
+    p {
+      color: rgba(0, 0, 0, 0.5);
+      margin-bottom: 24px;
+    }
+  }
+}
+
+.not-found, .loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  
+  mat-icon {
+    font-size: 80px;
+    height: 80px;
+    width: 80px;
+    margin-bottom: 24px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+  
+  h2 {
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  p {
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 32px;
+    max-width: 500px;
+  }
+}
+
+.loading-spinner {
+  mat-spinner {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 968px) {
+  .vet-profile .profile-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+    
+    .vet-image {
+      justify-self: center;
+      
+      img {
+        width: 220px;
+        height: 220px;
+      }
+    }
+  }
+  
+  .vet-info {
+    h1 {
+      font-size: 2rem !important;
+    }
+  }
+  
+  .tab-content .reviews-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .vet-profile .profile-header .vet-info .action-buttons {
+    flex-direction: column;
+  }
+  
+  .tab-content .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

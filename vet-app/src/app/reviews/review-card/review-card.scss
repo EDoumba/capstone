@@ -1,0 +1,53 @@
+.review-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  
+  .mat-card-header {
+    .review-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #3f51b5;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .mat-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    
+    .mat-card-subtitle {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+  
+  .mat-card-content {
+    padding-top: 12px;
+    
+    .rating {
+      margin-bottom: 12px;
+      
+      .rating-stars {
+        color: #ffc107;
+        
+        mat-icon {
+          font-size: 20px;
+          height: 20px;
+          width: 20px;
+        }
+      }
+    }
+    
+    .review-comment {
+      margin: 0;
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}

@@ -1,0 +1,154 @@
+.dashboard-container {
+  padding: 24px 0 40px;
+  min-height: calc(100vh - 200px);
+}
+
+.page-header {
+  margin-bottom: 32px;
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3f51b5;
+    margin-bottom: 8px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 24px;
+  
+  .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    
+    mat-icon {
+      font-size: 30px;
+      color: white;
+    }
+    
+    &.users {
+      background: linear-gradient(45deg, #FF416C, #FF4B2B);
+    }
+    
+    &.vets {
+      background: linear-gradient(45deg, #4A00E0, #8E2DE2);
+    }
+    
+    &.appointments {
+      background: linear-gradient(45deg, #0072FF, #00C6FF);
+    }
+    
+    &.revenue {
+      background: linear-gradient(45deg, #00b09b, #96c93d);
+    }
+  }
+  
+  h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: #2c3e50;
+  }
+  
+  p {
+    margin: 0 0 8px;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+  }
+  
+  .trend {
+    font-size: 0.9rem;
+    
+    &.positive {
+      color: #4caf50;
+    }
+    
+    &.negative {
+      color: #f44336;
+    }
+  }
+}
+
+.charts-section {
+  margin-bottom: 32px;
+  
+  .chart-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 24px;
+  }
+  
+  .chart-card {
+    .chart-placeholder {
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(0, 0, 0, 0.3);
+      
+      mat-icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+      }
+      
+      p {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+.recent-section {
+  mat-list {
+    padding: 0;
+    
+    mat-list-item {
+      border-bottom: 1px solid #f0f0f0;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .charts-section .chart-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-card .chart-placeholder {
+    height: 200px;
+    
+    mat-icon {
+      font-size: 48px;
+    }
+    
+    p {
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,121 @@
+<div class="vet-detail-container" *ngIf="vet">
+  <div class="container">
+    <div class="vet-profile">
+      <div class="profile-header">
+        <div class="vet-image">
+          <img [src]="vet.imageUrl || 'assets/default-vet.jpg'" [alt]="vet.name">
+        </div>
+        
+        <div class="vet-info">
+          <h1>{{ vet.name }}</h1>
+          <p class="specialty">{{ vet.specialty }}</p>
+          
+          <div class="rating-section">
+            <div class="rating">
+              <span class="rating-stars">
+                <mat-icon *ngFor="let star of getStars(vet.rating)">star</mat-icon>
+                <mat-icon *ngFor="let star of getEmptyStars(vet.rating)">star_border</mat-icon>
+              </span>
+              <span class="rating-value">{{ vet.rating }}/5</span>
+            </div>
+            <span class="review-count">({{ vet.reviewCount }} reviews)</span>
+          </div>
+          
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" (click)="openAppointmentDialog()">
+              <mat-icon>event</mat-icon>
+              Book Appointment
+            </button>
+            <button mat-button color="accent" (click)="toggleFavorite()">
+              <mat-icon>{{ isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+              {{ isFavorite ? 'Saved' : 'Save' }}
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Overview">
+          <div class="tab-content">
+            <div class="details-grid">
+              <div class="detail-card">
+                <h3>About</h3>
+                <p>Dr. {{ vet.name }} is a dedicated {{ vet.specialty }} with over {{ vet.experience }} years of experience. 
+                Committed to providing the highest quality care for your pets.</p>
+              </div>
+              
+              <div class="detail-card">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                  <p><mat-icon>phone</mat-icon> {{ vet.phone }}</p>
+                  <p><mat-icon>email</mat-icon> {{ vet.email }}</p>
+                  <p><mat-icon>location_on</mat-icon> {{ vet.address }}</p>
+                </div>
+              </div>
+              
+              <div class="detail-card">
+                <h3>Availability</h3>
+                <div class="availability">
+                  <div *ngFor="let day of vet.availability" class="availability-day">
+                    <strong>{{ day.day }}:</strong>
+                    <span>{{ day.times.join(', ') }}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="detail-card">
+                <h3>Services Offered</h3>
+                <mat-chip-listbox>
+                  <mat-chip>General Checkup</mat-chip>
+                  <mat-chip>Vaccinations</mat-chip>
+                  <mat-chip>Dental Care</mat-chip>
+                  <mat-chip>Surgery</mat-chip>
+                  <mat-chip>Emergency Care</mat-chip>
+                </mat-chip-listbox>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        
+        <mat-tab label="Reviews">
+          <div class="tab-content">
+            <div class="reviews-header">
+              <h2>Patient Reviews</h2>
+              <button mat-raised-button color="primary" (click)="openReviewDialog()">
+                <mat-icon>rate_review</mat-icon>
+                Write a Review
+              </button>
+            </div>
+            
+            <div class="reviews-grid">
+              <app-review-card 
+                *ngFor="let review of reviews" 
+                [review]="review">
+              </app-review-card>
+            </div>
+            
+            <div *ngIf="reviews.length === 0" class="no-reviews">
+              <mat-icon>rate_review</mat-icon>
+              <h3>No reviews yet</h3>
+              <p>Be the first to review Dr. {{ vet.name }}</p>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!vet && !loading" class="not-found">
+  <mat-icon>error_outline</mat-icon>
+  <h2>Veterinarian not found</h2>
+  <p>The veterinarian you're looking for doesn't exist or has been removed.</p>
+  <button mat-raised-button color="primary" routerLink="/vets">
+    Browse All Vets
+  </button>
+</div>
+
+<div *ngIf="loading" class="loading-spinner">
+  <mat-spinner diameter="60"></mat-spinner>
+  <p>Loading veterinarian details...</p>
+</div>

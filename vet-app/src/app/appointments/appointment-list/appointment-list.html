@@ -1,0 +1,102 @@
+<div class="appointments-container">
+  <div class="container">
+    <div class="page-header">
+      <h1>My Appointments</h1>
+      <p>Manage your upcoming and past veterinary appointments</p>
+    </div>
+    
+    <mat-card class="appointments-card">
+      <mat-card-header>
+        <mat-card-title>Appointment History</mat-card-title>
+        <mat-card-subtitle>All your scheduled appointments</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <mat-tab-group>
+          <mat-tab label="Upcoming">
+            <div class="tab-content">
+              <div *ngIf="upcomingAppointments.length === 0" class="no-appointments">
+                <mat-icon>event_available</mat-icon>
+                <h3>No upcoming appointments</h3>
+                <p>Schedule your first appointment with a veterinarian</p>
+                <button mat-raised-button color="primary" routerLink="/vets">
+                  Find a Vet
+                </button>
+              </div>
+              
+              <div *ngIf="upcomingAppointments.length > 0" class="appointments-list">
+                <div *ngFor="let appointment of upcomingAppointments" class="appointment-item">
+                  <div class="appointment-info">
+                    <h3>Appointment with Dr. {{ appointment.vetName }}</h3>
+                    <p class="appointment-date">
+                      <mat-icon>event</mat-icon>
+                      {{ appointment.date | date:'fullDate' }} at {{ appointment.time }}
+                    </p>
+                    <p class="appointment-pet">
+                      <mat-icon>pets</mat-icon>
+                      For: {{ appointment.petName }}
+                    </p>
+                    <p class="appointment-reason">Reason: {{ appointment.reason }}</p>
+                    
+                    <mat-chip [color]="getStatusColor(appointment.status)" selected>
+                      {{ appointment.status | titlecase }}
+                    </mat-chip>
+                  </div>
+                  
+                  <div class="appointment-actions">
+                    <button mat-button color="warn" (click)="cancelAppointment(appointment.id)">
+                      <mat-icon>cancel</mat-icon>
+                      Cancel
+                    </button>
+                    <button mat-button color="primary" (click)="rescheduleAppointment(appointment)">
+                      <mat-icon>schedule</mat-icon>
+                      Reschedule
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          
+          <mat-tab label="Past">
+            <div class="tab-content">
+              <div *ngIf="pastAppointments.length === 0" class="no-appointments">
+                <mat-icon>history</mat-icon>
+                <h3>No past appointments</h3>
+                <p>Your appointment history will appear here</p>
+              </div>
+              
+              <div *ngIf="pastAppointments.length > 0" class="appointments-list">
+                <div *ngFor="let appointment of pastAppointments" class="appointment-item past">
+                  <div class="appointment-info">
+                    <h3>Appointment with Dr. {{ appointment.vetName }}</h3>
+                    <p class="appointment-date">
+                      <mat-icon>event</mat-icon>
+                      {{ appointment.date | date:'fullDate' }} at {{ appointment.time }}
+                    </p>
+                    <p class="appointment-pet">
+                      <mat-icon>pets</mat-icon>
+                      For: {{ appointment.petName }}
+                    </p>
+                    <p class="appointment-reason">Reason: {{ appointment.reason }}</p>
+                    
+                    <mat-chip [color]="getStatusColor(appointment.status)" selected>
+                      {{ appointment.status | titlecase }}
+                    </mat-chip>
+                  </div>
+                  
+                  <div class="appointment-actions">
+                    <button mat-button color="primary" (click)="bookAgain(appointment.vetId)">
+                      <mat-icon>event</mat-icon>
+                      Book Again
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

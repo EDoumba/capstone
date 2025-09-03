@@ -1,0 +1,20 @@
+<mat-card class="review-card">
+  <mat-card-header>
+    <div mat-card-avatar class="review-avatar">
+      {{ review.userName.charAt(0) }}
+    </div>
+    <mat-card-title>{{ review.userName }}</mat-card-title>
+    <mat-card-subtitle>{{ review.date | date:'mediumDate' }}</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="rating">
+      <span class="rating-stars">
+        <mat-icon *ngFor="let star of getStars(review.rating)">star</mat-icon>
+        <mat-icon *ngFor="let star of getEmptyStars(review.rating)">star_border</mat-icon>
+      </span>
+    </div>
+    
+    <p class="review-comment">{{ review.comment }}</p>
+  </mat-card-content>
+</mat-card>

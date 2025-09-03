@@ -1,0 +1,28 @@
+<div class="message-input-container">
+  <form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+    <div class="input-wrapper">
+      <button mat-icon-button type="button" class="attach-btn">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      
+      <mat-form-field appearance="outline" class="message-field">
+        <input 
+          matInput 
+          formControlName="content" 
+          placeholder="Type your message..." 
+          (keydown.enter)="onSubmit()"
+        >
+      </mat-form-field>
+      
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        class="send-btn"
+        [disabled]="messageForm.invalid"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

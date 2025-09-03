@@ -1,0 +1,58 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <div class="header-container">
+    <div class="logo-section" routerLink="/">
+      <mat-icon class="logo-icon">pets</mat-icon>
+      <span class="logo-text">VetApp</span>
+    </div>
+
+    <nav class="nav-section">
+      <a mat-button routerLink="/vets" routerLinkActive="active-link">
+        <mat-icon>search</mat-icon>
+        Find Vets
+      </a>
+      
+      <a mat-button routerLink="/appointments" routerLinkActive="active-link" *ngIf="isLoggedIn">
+        <mat-icon>event</mat-icon>
+        Appointments
+      </a>
+      
+      <a mat-button routerLink="/chat" routerLinkActive="active-link" *ngIf="isLoggedIn">
+        <mat-icon>chat</mat-icon>
+        Messages
+        </a>
+          
+      <a mat-button routerLink="/user/profile" routerLinkActive="active-link" *ngIf="isLoggedIn">
+        <mat-icon>person</mat-icon>
+        Profile
+      </a>
+    </nav>
+
+    <div class="user-section">
+      <ng-container *ngIf="isLoggedIn; else loginSection">
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="navigateToProfile()">
+            <mat-icon>person</mat-icon>
+            Profile
+          </button>
+          <button mat-menu-item routerLink="/user/preferences">
+            <mat-icon>settings</mat-icon>
+            Preferences
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </mat-menu>
+      </ng-container>
+      
+      <ng-template #loginSection>
+        <a mat-button routerLink="/auth/login">Login</a>
+        <a mat-raised-button color="accent" routerLink="/auth/register">Sign Up</a>
+      </ng-template>
+    </div>
+  </div>
+</mat-toolbar>
