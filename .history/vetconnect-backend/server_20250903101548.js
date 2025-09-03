@@ -4,7 +4,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const http = require('http');
 const socketIo = require('socket.io');
-require('dotenv').config();
+require('dotenv').config({ path: '.env' });
+
 
 const { sequelize } = require('./models');
 
@@ -54,10 +55,8 @@ console.log('process.env.PORT:', process.env.PORT);
 console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
 
 // Start server
-process.env.PORT = '3000';//Override PORT temporarily for testing
 const PORT = process.env.PORT || 3000;
 console.log('Final PORT selected:', PORT);
-
 
 sequelize.authenticate()
 .then(()=>{

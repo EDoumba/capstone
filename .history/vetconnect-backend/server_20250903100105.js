@@ -17,10 +17,14 @@ app.use(helmet());
 app.use(cors({
   origin: 'http://localhost:4200', // Angular dev server, app.use(cors());
   credentials: true
+
 }));
 app.use(morgan('combined'));
 app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({ extended:true }));
+
+// Add this right after your middleware setup
+console.log('Middleware setup complete');
 
 // Socket.io
 require('./socket/chat')(io);
@@ -48,25 +52,40 @@ app.use((error,req,res,next)=>{
   res.status(500).json({ message:'Something went wrong!' });
 });
 
-// Add this right before the PORT declaration
-console.log('Environment variables:');
-console.log('process.env.PORT:', process.env.PORT);
-console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-
 // Start server
-process.env.PORT = '3000';//Override PORT temporarily for testing
 const PORT = process.env.PORT || 3000;
-console.log('Final PORT selected:', PORT);
-
 
 sequelize.authenticate()
 .then(()=>{
   console.log('Database connected successfully.');
   return sequelize.sync({ alter:true });
 })
+
+// Add this right before server.listen
+console.log('About to start server...');
 .then(()=>{
   server.listen(PORT, '0.0.0.0',()=> console.log(`Server running on port ${PORT}`));
 })
 .catch(err=>{
   console.error('Unable to connect to the database:',err);
 });
+
+// Test if server is actually listening
+    const net = require('net');
+    const tester = net.createServer();
+    tester.once('error', (err) => {
+      console.error('Port test error:', err);
+    });
+    tester.once('listening', () => {
+      console.log('Port is actually available');
+      tester.close();
+    });
+    tester.listen(PORT);
+
+// Immediate test
+
+    const test = require('http').get(`http://localhost:${PORT}/api/health`, (res) => {
+      console.log('Self-test passed! Server is accessible');
+    }).on('error', (err) => {
+      console.error('Self-test failed! Server not accessible:', err.message);
+    });

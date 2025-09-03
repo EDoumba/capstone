@@ -48,16 +48,10 @@ app.use((error,req,res,next)=>{
   res.status(500).json({ message:'Something went wrong!' });
 });
 
-// Add this right before the PORT declaration
-console.log('Environment variables:');
-console.log('process.env.PORT:', process.env.PORT);
-console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
+
 
 // Start server
-process.env.PORT = '3000';//Override PORT temporarily for testing
 const PORT = process.env.PORT || 3000;
-console.log('Final PORT selected:', PORT);
-
 
 sequelize.authenticate()
 .then(()=>{

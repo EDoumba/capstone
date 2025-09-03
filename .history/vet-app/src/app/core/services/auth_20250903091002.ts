@@ -38,10 +38,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  // Add this to your existing AuthService in auth.service.ts
-getToken(): string | null {
-  return localStorage.getItem('token');
-}
+  
   login(email: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, { email, password }) // '/api/auth/login'
       .pipe(tap(response => {

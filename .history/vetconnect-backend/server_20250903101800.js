@@ -54,7 +54,7 @@ console.log('process.env.PORT:', process.env.PORT);
 console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
 
 // Start server
-process.env.PORT = '3000';//Override PORT temporarily for testing
+rocess.env.PORT = '3000';//Override PORT temporarily for testing
 const PORT = process.env.PORT || 3000;
 console.log('Final PORT selected:', PORT);
 

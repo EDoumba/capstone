@@ -48,16 +48,8 @@ app.use((error,req,res,next)=>{
   res.status(500).json({ message:'Something went wrong!' });
 });
 
-// Add this right before the PORT declaration
-console.log('Environment variables:');
-console.log('process.env.PORT:', process.env.PORT);
-console.log('process.env.NODE_ENV:', process.env.NODE_ENV);
-
 // Start server
-process.env.PORT = '3000';//Override PORT temporarily for testing
 const PORT = process.env.PORT || 3000;
-console.log('Final PORT selected:', PORT);
-
 
 sequelize.authenticate()
 .then(()=>{
@@ -70,3 +62,25 @@ sequelize.authenticate()
 .catch(err=>{
   console.error('Unable to connect to the database:',err);
 });
+
+// Test if server is actually listening
+    const net = require('net');
+    const tester = net.createServer();
+    tester.once('error', (err) => {
+      console.error('Port test error:', err);
+    });
+    tester.once('listening', () => {
+      console.log('Port is actually available');
+      tester.close();
+    });
+    tester.listen(PORT);
+  });
+
+
+// Immediate test
+
+    const test = require('http').get(`http://localhost:${PORT}/api/health`, (res) => {
+      console.log('Self-test passed! Server is accessible');
+    }).on('error', (err) => {
+      console.error('Self-test failed! Server not accessible:', err.message);
+    });
