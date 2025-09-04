@@ -1,0 +1,91 @@
+<div class="chat-container">
+  <mat-card class="chat-card">
+    <mat-card-header class="chat-header">
+      <div class="header-content">
+        <button mat-icon-button class="back-button" (click)="goBack()" *ngIf="isMobile">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="chat-info">
+          <div class="participant-name">{{ currentChat?.participant?.name || 'Select a chat' }}</div>
+          <div class="participant-role" *ngIf="currentChat?.participant?.role">
+            {{ currentChat.participant.role }}
+          </div>
+        </div>
+      </div>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="clearChat()">
+          <mat-icon>delete</mat-icon>
+          <span>Clear chat</span>
+        </button>
+        <button mat-menu-item (click)="muteChat()">
+          <mat-icon>notifications_off</mat-icon>
+          <span>Mute notifications</span>
+        </button>
+      </mat-menu>
+    </mat-card-header>
+
+    <mat-card-content class="chat-content">
+      <div class="chat-list" *ngIf="!currentChat">
+        <div class="no-chats" *ngIf="chats.length === 0">
+          <mat-icon>forum</mat-icon>
+          <h3>No chats yet</h3>
+          <p>Start a conversation with a vet or user</p>
+        </div>
+        <div class="chat-items" *ngIf="chats.length > 0">
+          <div 
+            *ngFor="let chat of chats" 
+            class="chat-item" 
+            [class.active]="chat.id === currentChatId"
+            (click)="selectChat(chat.id)"
+          >
+            <div class="chat-avatar">
+              <mat-icon>account_circle</mat-icon>
+              <span class="unread-badge" *ngIf="chat.unreadCount > 0">
+                {{ chat.unreadCount }}
+              </span>
+            </div>
+            <div class="chat-details">
+              <div class="chat-name">{{ chat.participant.name }}</div>
+              <div class="chat-preview" *ngIf="chat.lastMessage">
+                {{ chat.lastMessage.content | truncate:50 }}
+              </div>
+              <div class="chat-time" *ngIf="chat.lastMessage">
+                {{ chat.lastMessage.timestamp | date:'shortTime' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="message-area" *ngIf="currentChat">
+        <div class="messages-container" #messagesContainer>
+          <div class="messages">
+            <div 
+              *ngFor="let message of messages" 
+              class="message"
+              [class.sent]="message.senderId === currentUser?.id"
+              [class.received]="message.senderId !== currentUser?.id"
+            >
+              <div class="message-content">
+                <div class="message-text">{{ message.content }}</div>
+                <div class="message-time">
+                  {{ message.timestamp | date:'shortTime' }}
+                  <mat-icon *ngIf="message.read && message.senderId === currentUser?.id">done_all</mat-icon>
+                  <mat-icon *ngIf="!message.read && message.senderId === currentUser?.id">done</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <app-message-input 
+          (sendMessage)="onSendMessage($event)"
+          [disabled]="!currentChat"
+        ></app-message-input>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
